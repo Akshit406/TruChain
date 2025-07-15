@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useWeb3 } from '../../hooks/useWeb3';
+import useWeb3 from '../hooks/useWeb3';
 import ManufacturerPanel from './RolePanels/ManufacturerPanel';
 import DistributorPanel from './RolePanels/DistributorPanel';
 import RetailerPanel from './RolePanels/RetailerPanel';
 import ConsumerPanel from './RolePanels/ConsumerPanel';
-import LoadingIndicator from '../LoadingIndicator';
+import LoadingIndicator from './LoadingIndicator';
 
 const RoleViewSwitcher = () => {
   const { roles, loading: rolesLoading } = useWeb3();
