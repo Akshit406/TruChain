@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { useWeb3 } from '../hooks/useWeb3';
+import useWeb3  from '../hooks/useWeb3';
 
 const Admin = () => {
   const { contract, account } = useWeb3();
