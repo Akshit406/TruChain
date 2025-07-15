@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import SupplyChainABI from '../../artifacts/contracts/SupplyChain.sol/SupplyChain.json';
+import SupplyChainABI from '../../../build/contracts/SupplyChain.json';
 
 const Web3Context = createContext();
 
@@ -13,11 +13,11 @@ export const Web3Provider = ({ children }) => {
     isManufacturer: false,
     isDistributor: false,
     isRetailer: false,
-    isConsumer: false
+    isConsumer: false,
   });
   const [loading, setLoading] = useState(false);
 
-  const contractAddress = process.env.REACT_APP_CONTRACT_ADDRESS;
+  const contractAddress = import.meta.env.VITE_CONTRACT_ADDRESS;
 
   const connectWallet = async () => {
     try {
@@ -53,7 +53,7 @@ export const Web3Provider = ({ children }) => {
         isManufacturer: await contract.isManufacturer(account),
         isDistributor: await contract.isDistributor(account),
         isRetailer: await contract.isRetailer(account),
-        isConsumer: await contract.isConsumer(account)
+        isConsumer: await contract.isConsumer(account),
       };
       setRoles(newRoles);
     } catch (error) {
@@ -62,45 +62,47 @@ export const Web3Provider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts) => {
-        if (accounts.length > 0) {
-          setAccount(accounts[0]);
-          checkRoles(contract, accounts[0]);
-        } else {
-          setAccount('');
-          setIsAdmin(false);
-          setRoles({
-            isManufacturer: false,
-            isDistributor: false,
-            isRetailer: false,
-            isConsumer: false
-          });
-        }
-      });
-    }
+    if (!window.ethereum) return;
+
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length > 0) {
+        setAccount(accounts[0]);
+        checkRoles(contract, accounts[0]);
+      } else {
+        setAccount('');
+        setIsAdmin(false);
+        setRoles({
+          isManufacturer: false,
+          isDistributor: false,
+          isRetailer: false,
+          isConsumer: false,
+        });
+      }
+    };
+
+    window.ethereum.on('accountsChanged', handleAccountsChanged);
 
     return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged');
-      }
+      window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
     };
   }, [contract]);
 
   return (
-    <Web3Context.Provider value={{
-      account,
-      contract,
-      provider,
-      isAdmin,
-      roles,
-      loading,
-      connectWallet,
-      checkRoles
-    }}>
+    <Web3Context.Provider
+      value={{
+        account,
+        contract,
+        provider,
+        isAdmin,
+        roles,
+        loading,
+        connectWallet,
+        checkRoles,
+      }}
+    >
       {children}
     </Web3Context.Provider>
   );
 };
 
-export const useWeb3 = () => useContext(Web3Context);
+export default Web3Context;
