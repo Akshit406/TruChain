@@ -4,7 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
-import { useWeb3 } from './hooks/useWeb3';
+import  useWeb3  from './hooks/useWeb3';
 
 function App() {
   const { isAdmin } = useWeb3();

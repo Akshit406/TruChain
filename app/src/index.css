@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,21 +11,19 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-/* Custom scrollbar */
+
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   @apply w-2 h-2;
 }
-
 ::-webkit-scrollbar-track {
   @apply bg-dark-700;
 }
-
 ::-webkit-scrollbar-thumb {
   @apply bg-dark-500 rounded-full;
 }
-
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-dark-400;
+  @apply bg-dark-700;
 }
 
 /* Animations */
@@ -30,12 +31,37 @@ body {
   from { opacity: 0; }
   to { opacity: 1; }
 }
-
 .fade-in {
   animation: fadeIn 0.3s ease-in;
 }
 
-/* Custom components */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+.animate-pulse-slow {
+  animation: pulse 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.gradient-animate {
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+}
+
+/* Reusable UI classes */
 .btn-primary {
   @apply bg-accent-primary hover:bg-accent-primary/90 text-white px-4 py-2 rounded-md transition-all;
   @apply flex items-center justify-center gap-2;
@@ -60,19 +86,15 @@ body {
 .status-badge {
   @apply px-3 py-1 rounded-full text-xs font-semibold;
 }
-
 .status-created {
   @apply bg-status-created text-white;
 }
-
 .status-shipped {
   @apply bg-status-shipped text-white;
 }
-
 .status-stocked {
   @apply bg-status-stocked text-white;
 }
-
 .status-purchased {
   @apply bg-status-purchased text-white;
 }
