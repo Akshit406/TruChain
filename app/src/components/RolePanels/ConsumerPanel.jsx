@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useSupplyChain } from '../../hooks/useSupplyChain';
+import useSupplyChain  from '../../hooks/useSupplyChain';
 import ProductTable from '../ProductTable';
+import { toast } from 'react-hot-toast';
 
 const ConsumerPanel = () => {
   const { products, purchaseProduct } = useSupplyChain();

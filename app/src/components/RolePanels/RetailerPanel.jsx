@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSupplyChain } from '../../hooks/useSupplyChain';
+import  useSupplyChain  from '../../hooks/useSupplyChain';
 import ProductTable from '../ProductTable';
 
 const RetailerPanel = () => {
